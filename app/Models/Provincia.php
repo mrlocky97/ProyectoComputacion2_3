@@ -10,12 +10,12 @@ class Provincia extends Model
     use HasFactory;
 
     protected $fillable = [ 
-        'id',
-        'comunidad_id',
+        'idProvincia',
+        'idComunidad',
+        'poblacion',
         'provincia',
-        'slug',
-        'capital_id',
-        '',
+        'latitud',
+        'longitud',
     ];
 
 

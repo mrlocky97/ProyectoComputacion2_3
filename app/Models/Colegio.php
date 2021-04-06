@@ -11,16 +11,13 @@ class Colegio extends Model
 
 
     protected $fillable = [
-        'id',
+        'idColegio',
         'idMunicipio',
-        'nombre',
-        'localidad',
-        'denominacionGenerica',
-        'denominacionEspecifica',
-        'domicilio',
-        'codigoPostal',
-        'lat',
-        'lon',
+        'denomGenerica',
+        'denomEspesifica',
+        'naturaleza',
+        'direccion',
+        'telefono',
     ];
 
 

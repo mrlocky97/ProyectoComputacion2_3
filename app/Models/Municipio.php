@@ -10,14 +10,11 @@ class Municipio extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
-        'provincia_id',
-        'municipio',
-        'lat',
-        'lon',
-        'slug',
-        'superficie',
-        'poblacion',
+        'idMunicipio',
+        'idProvincia',
+        'longitud',
+        'latitud',
+        'CodPostal',
     ];
 
 }

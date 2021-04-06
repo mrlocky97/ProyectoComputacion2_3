@@ -10,13 +10,12 @@ class Hospital extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
+        'idHospital',
         'idMunicipio',
+        'correo',
+        'telefono',
+        'direccion',
         'nombre',
-        'lat',
-        'lon',
-        '',
-        '',
-        '',
+        'claseCentro',
     ];
 }

@@ -10,12 +10,10 @@ class Comunidad extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
-        'nombre',
-        'lat',
-        'lon', 
-        'capital_id',
-        '',
-        '',
+        'idComunidad',
+        'poblacion',
+        'comunidad',
+        'latitud', 
+        'longitud',
     ];
 }
