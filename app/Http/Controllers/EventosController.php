@@ -13,7 +13,7 @@ class EventosController extends Controller
      */
     public function index()
     {
-        //
+        //hola
     }
 
     /**
