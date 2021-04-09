@@ -15,10 +15,9 @@ class Comunidad extends Migration
     {
         Schema::create('comunidad', function (Blueprint $table) {
             $table->id('idComunidad');
-            $table->integer('poblacion')->unsigned();
+            $table->string('slug');
             $table->string('comunidad');
-            $table->float('latitud');
-            $table->float('longitud');
+            $table->integer('capital_id')->unsigned();
         });
     }
 

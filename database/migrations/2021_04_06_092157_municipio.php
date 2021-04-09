@@ -16,9 +16,10 @@ class Municipio extends Migration
         Schema::create('municipio', function (Blueprint $table) {
             $table->id('idMunicipio');
             $table->foreignId('idProvincia')->constrained('provincia');
+            $table->string('municipio');
+            $table->string('slug');
             $table->float('longitud');
             $table->float('latitud');
-            $table->integer('codPostal')->unsigned();// el unsigned es para que sean solo positivos
         });
     }
 

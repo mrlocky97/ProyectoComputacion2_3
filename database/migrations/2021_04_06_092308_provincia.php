@@ -16,10 +16,9 @@ class Provincia extends Migration
         Schema::create('provincia', function (Blueprint $table) {
             $table->id('idProvincia');
             $table->foreignId('idComunidad')->constrained('comunidad');
-            $table->integer('poblacion')->unsigned();
+            $table->integer('capital_id');
             $table->string('provincia');
-            $table->float('longitud');
-            $table->float('latitud');
+            $table->string('slug');
         });
     }
 
