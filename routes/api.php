@@ -27,12 +27,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('Colegios', ColegiosController::class);
-Route::resource('Comunidades', ComunidadesController::class);
-Route::resource('Eventos', EventosController::class);
-Route::resource('Hospitales', HospitalesController::class);
-Route::resource('Municipios', MunicipiosController::class);
-Route::resource('Provincias', ProvinciasController::class);
-Route::resource('Restaurantes', RestaurantesController::class);
-Route::resource('Usuarios', UsuariosController::class);
-Route::resource('Viviendas', ViviendasController::class);
+Route::resource('Colegios', ColegiosController::class, ['only' =>['index', 'show']]);
+Route::resource('Comunidades', ComunidadesController::class, ['only' =>['index', 'show']]);
+Route::resource('Eventos', EventosController::class, ['only' =>['index', 'show']]);
+Route::resource('Hospitales', HospitalesController::class, ['only' =>['index', 'show']]);
+Route::resource('Municipios', MunicipiosController::class, ['only' =>['index', 'show']]);
+Route::resource('Provincias', ProvinciasController::class, ['only' =>['index', 'show']]);
+Route::resource('Restaurantes', RestaurantesController::class, ['only' =>['index', 'show']]);
+Route::resource('Usuarios', UsuariosController::class, ['except' => ['destroy']]);
+Route::resource('Viviendas', ViviendasController::class, ['only' =>['index', 'show']]);
