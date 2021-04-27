@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comunidad;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ComunidadesController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -16,11 +13,7 @@ class ComunidadesController extends Controller
      */
     public function index()
     {
-        $comunidad = Comunidad::all();
-        dd($comunidad);
-        return [
-            'comunidads' => $comunidad
-        ];
+        //
     }
 
     /**
@@ -52,8 +45,7 @@ class ComunidadesController extends Controller
      */
     public function show($id)
     {
-        $comunidad = Comunidad::where('CODAUTO', $id)->firstOrFail();;
-        dd($comunidad);
+        //
     }
 
     /**
