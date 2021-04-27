@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Provincia;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class ProvinciasController extends Controller
 {
@@ -13,7 +15,11 @@ class ProvinciasController extends Controller
      */
     public function index()
     {
-        //
+        $provincias = Provincia::all();
+        dd($provincias);
+        return [
+            'provincias' => $provincias
+        ];
     }
 
     /**
@@ -45,7 +51,9 @@ class ProvinciasController extends Controller
      */
     public function show($id)
     {
-        //
+        $provincia = Provincia::where('CODPROV', $id)->firstOrFail();;
+        dd($provincia);
+        return $provincia;
     }
 
     /**
