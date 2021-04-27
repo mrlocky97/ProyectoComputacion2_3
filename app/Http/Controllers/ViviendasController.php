@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vivienda;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class ViviendasController extends Controller
 {
@@ -13,7 +15,11 @@ class ViviendasController extends Controller
      */
     public function index()
     {
-        //
+        $viviendas = Vivienda::all();
+        dd($viviendas);
+        return [
+            'viviendas' => $viviendas
+        ];
     }
 
     /**
@@ -45,7 +51,9 @@ class ViviendasController extends Controller
      */
     public function show($id)
     {
-        //
+        $vivienda = Vivienda::where('idVivienda', $id)->firstOrFail();;
+        dd($vivienda);
+        return $vivienda;
     }
 
     /**

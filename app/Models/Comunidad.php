@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comunidad extends Model
+class comunidad extends Model
 {
+    protected $table = 'comunidades';
     use HasFactory;
-
     protected $fillable = [
-        'idComunidad',
-        'poblacion',
-        'comunidad',
-        'latitud', 
-        'longitud',
+        'CODAUTO',
+        'AUTONOMIA',
+        'TEXTO_AUTONOMIA'
     ];
 }

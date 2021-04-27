@@ -8,14 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Provincia extends Model
 {
     use HasFactory;
-
+    protected $table = 'provincias';
     protected $fillable = [ 
-        'idProvincia',
-        'idComunidad',
-        'poblacion',
-        'provincia',
-        'latitud',
-        'longitud',
+        'CODPROV',
+        'NOMBRE',
+        'CODAUTO',
     ];
 
 

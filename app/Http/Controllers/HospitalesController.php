@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hospital;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class HospitalesController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +16,11 @@ class HospitalesController extends Controller
      */
     public function index()
     {
-        //
+        $hospitales = Hospital::all();
+        dd($hospitales);
+        return [
+            'hospitales' => $hospitales
+        ];
     }
 
     /**
@@ -45,7 +52,9 @@ class HospitalesController extends Controller
      */
     public function show($id)
     {
-        //
+        $hospital = Hospital::where('CODCNH', $id)->firstOrFail();;
+        dd($hospital);
+        return $hospital;
     }
 
     /**
