@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Municipio;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class MunicipiosController extends Controller
 {
@@ -13,7 +15,11 @@ class MunicipiosController extends Controller
      */
     public function index()
     {
-        //
+        $municipios = Municipio::all();
+        dd($municipios);
+        return [
+            'municipios' => $municipios
+        ];
     }
 
     /**
@@ -45,7 +51,9 @@ class MunicipiosController extends Controller
      */
     public function show($id)
     {
-        //
+        $municipio = Municipio::where('CODMU', $id)->firstOrFail();;
+        dd($municipio);
+        return $municipio;
     }
 
     /**

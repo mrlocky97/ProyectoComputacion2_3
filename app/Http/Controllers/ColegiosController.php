@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Colegio;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+//use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\JsonResponse;
 
 class ColegiosController extends Controller
 {
@@ -13,7 +17,11 @@ class ColegiosController extends Controller
      */
     public function index()
     {
-        //
+        $colegios = Colegio::all();
+        return [
+            'colegio' => $colegios
+        ];
+        dd($colegios);
     }
 
     /**
@@ -45,7 +53,8 @@ class ColegiosController extends Controller
      */
     public function show($id)
     {
-        //
+        $colegio = Colegio::where('idColegio', $id)->firstOrFail();;
+        dd($colegio);
     }
 
     /**
