@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HospitalesController extends Controller
+class EventosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class HospitalesController extends Controller
      */
     public function index()
     {
-        //
+        //hola
     }
 
     /**
