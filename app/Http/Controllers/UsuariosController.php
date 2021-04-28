@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class UsuariosController extends Controller
 {
@@ -13,7 +15,11 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = Usuario::all();
+        dd($usuarios);
+        return [
+            'usuarios' => $usuarios
+        ];
     }
 
     /**
@@ -34,7 +40,8 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuario = Usuario::create(request()->all());
+        return $product;
     }
 
     /**
@@ -45,7 +52,9 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
+        $usuario = Usuario::where('idUsuario', $id)->firstOrFail();;
+        dd($usuario);
+        return $usuario;
     }
 
     /**
