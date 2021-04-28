@@ -22,7 +22,7 @@ class ComunidadesController extends Controller
             'comunidads' => $comunidad
         ];
     }
-
+//hola
     /**
      * Show the form for creating a new resource.
      *
