@@ -8,7 +8,6 @@
         <!-- Google Fonts -->
 
         <!-- Estilos -->
-
         <title>Formulario Login</title>
     </head>
 
@@ -17,11 +16,11 @@
             <h1>Login</h1>
         </div>
         <div>
-            <form (submit)="iniciarSesion($event, correo.value, pass.value)">
+            <form (submit)="iniciarSesion( $event, email.value, password.value)">     
                 <br>
-                <input #correo type="email" placeholder="Correo electronico">
+                <input #email type="email" placeholder="Correo electronico">
                 <br>
-                <input #pass type="password" placeholder="Contraseña">
+                <input #password type="password" placeholder="Contraseña">
                 <br>
                 <button type="submit">
                     Iniciar sesion
