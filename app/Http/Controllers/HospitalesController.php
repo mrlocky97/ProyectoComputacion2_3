@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hospital;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\JsonResponse;
 
 class HospitalesController extends Controller
 {
@@ -17,10 +18,7 @@ class HospitalesController extends Controller
     public function index()
     {
         $hospitales = Hospital::all();
-        dd($hospitales);
-        return [
-            'hospitales' => $hospitales
-        ];
+        return response()->json($hospitales, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -53,8 +51,7 @@ class HospitalesController extends Controller
     public function show($id)
     {
         $hospital = Hospital::where('CODCNH', $id)->firstOrFail();;
-        dd($hospital);
-        return $hospital;
+        return response()->json($hospital, JsonResponse::HTTP_OK);
     }
 
     /**

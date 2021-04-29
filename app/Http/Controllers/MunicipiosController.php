@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\JsonResponse;
 
 class MunicipiosController extends Controller
 {
@@ -16,10 +17,7 @@ class MunicipiosController extends Controller
     public function index()
     {
         $municipios = Municipio::all();
-        dd($municipios);
-        return [
-            'municipios' => $municipios
-        ];
+        return response()->json($municipios, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -51,9 +49,8 @@ class MunicipiosController extends Controller
      */
     public function show($id)
     {
-        $municipio = Municipio::where('CODMU', $id)->firstOrFail();;
-        dd($municipio);
-        return $municipio;
+        $municipio = Municipio::where('CODMUN', $id)->firstOrFail();;
+        return response()->json($municipio, JsonResponse::HTTP_OK);
     }
 
     /**
