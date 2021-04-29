@@ -8,33 +8,25 @@
         <!-- Google Fonts -->
 
         <!-- Estilos -->
-        
-        <title>Formulario Login y Registro de Usuarios</title>
+
+        <title>Formulario Login</title>
     </head>
 
     <body>
-        <!-- Formularios -->
-        <div class="contenedor-formularios">
-            <!-- Contenido de los Formularios -->
-            <div class="contenido-tab">
-                <!-- Iniciar Sesion -->
-                <div id="iniciar-sesion">
-                    <h1>Iniciar Sesión</h1>
-                    <form method="post">
-                        <div class="contenedor-input">
-                            <input type="text" required placeholder="Usuario">
-                        </div>
-
-                        <div class="contenedor-input">
-                            <input type="password" required placeholder="Contraseña">
-                        </div>
-                        <p class="forgot"><a href="#">Se te olvidó la contraseña?</a></p>
-                        <button type="submit">
-                            Iniciar sesion
-                        </button>
-                    </form>
-                </div>
-            </div>
+        <div>
+            <h1>Login</h1>
+        </div>
+        <div>
+            <form (submit)="iniciarSesion($event, correo.value, pass.value)">
+                <br>
+                <input #correo type="email" placeholder="Correo electronico">
+                <br>
+                <input #pass type="password" placeholder="Contraseña">
+                <br>
+                <button type="submit">
+                    Iniciar sesion
+                </button> 
+            </form>
         </div>
     </body>
 </html>
