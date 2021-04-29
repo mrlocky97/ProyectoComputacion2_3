@@ -5,9 +5,11 @@ import { Component } from '@angular/core';
     styleUrls:['./Login.component.css'],
 })
 export class LoginComponent{
-    iniciarSesion(event:any, email:string, password:string):void {
+
+    
+    public iniciarSesion(event:any, email:string, password:string):void {
         event.preventDefault();
-        console.log("INICIANDO SESION ...");
+        console.log("hola desde login");
         console.log(email);
         console.log(password);
     }
