@@ -27,5 +27,6 @@ export class RegistroComponent{
         console.log(email);
         console.log(password);
         console.log(cb_municipio);
+        //buenas tardess
     }
 }
