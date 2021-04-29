@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vivienda;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\JsonResponse;
 
 class ViviendasController extends Controller
 {
@@ -16,10 +17,7 @@ class ViviendasController extends Controller
     public function index()
     {
         $viviendas = Vivienda::all();
-        dd($viviendas);
-        return [
-            'viviendas' => $viviendas
-        ];
+        return response()->json($viviendas, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -52,8 +50,7 @@ class ViviendasController extends Controller
     public function show($id)
     {
         $vivienda = Vivienda::where('idVivienda', $id)->firstOrFail();;
-        dd($vivienda);
-        return $vivienda;
+        return response()->json($viviendas, JsonResponse::HTTP_OK);
     }
 
     /**

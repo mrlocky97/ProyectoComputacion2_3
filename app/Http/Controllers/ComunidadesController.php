@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comunidad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 
 class ComunidadesController extends Controller
 {
@@ -16,11 +17,8 @@ class ComunidadesController extends Controller
      */
     public function index()
     {
-        $comunidad = Comunidad::all();
-        dd($comunidad);
-        return [
-            'comunidads' => $comunidad
-        ];
+        $comunidades = Comunidad::all();
+        return response()->json($comunidades, JsonResponse::HTTP_OK);
     }
 //hola
     /**
@@ -53,7 +51,7 @@ class ComunidadesController extends Controller
     public function show($id)
     {
         $comunidad = Comunidad::where('CODAUTO', $id)->firstOrFail();;
-        dd($comunidad);
+        return response()->json($comunidad, JsonResponse::HTTP_OK);
     }
 
     /**

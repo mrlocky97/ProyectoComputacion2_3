@@ -18,10 +18,7 @@ class ColegiosController extends Controller
     public function index()
     {
         $colegios = Colegio::all();
-        return [
-            'colegio' => $colegios
-        ];
-        dd($colegios);
+        return response()->json($colegios, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -53,8 +50,8 @@ class ColegiosController extends Controller
      */
     public function show($id)
     {
-        $colegio = Colegio::where('idColegio', $id)->firstOrFail();;
-        dd($colegio);
+        $colegio = Colegio::where('idColegio', $id)->firstOrFail();
+        return response()->json($colegio, JsonResponse::HTTP_OK);
     }
 
     /**

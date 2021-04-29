@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+        <!-- Google Fonts -->
+
+        <!-- Estilos -->
+        <link href="//cdn.syncfusion.com/ej2/material.css" rel="stylesheet" />
+        <title>Registro de Usuarios</title>
+    </head>
+
+    <body>
+        <!-- Formularios -->
+        <div class="contenedor-formularios">
+            <!-- Contenido de los Formularios -->
+            <div class="contenido-tab">
+                <!-- Iniciar Sesion -->
+                <div id="iniciar-sesion">
+                    <h1>CREAR CUENTA</h1>
+                    <form (submit) = "registrarUsuario($event, email.value, pwd.value, nombre.value, apellidos.value, municipio.value)">
+                        <div class="contenedor-input">
+                            <input #nombre type="text" placeholder="Nombre" id="usuarioTxt">
+                        </div>
+
+                        <div class="contenedor-input">
+                            <input #apellidos type="text" placeholder="Apellidos" id="usuarioTxt">
+                        </div>
+
+                        <div class="contenedor-input">
+                            <input #email type="email" placeholder="Correo electronico" id="usuarioTxt">
+                        </div>
+
+                        <div class="contenedor-input">
+                            <input #pwd type="password" placeholder="Contraseña" id="passwordTxt">
+                        </div>
+                        <div class="contenedor-input" style='width: 250px'>
+                            <ejs-combobox #municipio id='municipios' [dataSource]='municipios' [autofill]='true' [fields]='localFields' [placeholder]='localWaterMark' [popupHeight]='height'></ejs-combobox>
+                        </div>
+                        <button type="submit">
+                            REGISTRARSE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

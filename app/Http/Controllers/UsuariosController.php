@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\JsonResponse;
 
 class UsuariosController extends Controller
 {
@@ -16,10 +17,7 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = Usuario::all();
-        dd($usuarios);
-        return [
-            'usuarios' => $usuarios
-        ];
+        return response()->json($usuarios, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -52,9 +50,8 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        $usuario = Usuario::where('idUsuario', $id)->firstOrFail();;
-        dd($usuario);
-        return $usuario;
+        $usuario = Usuario::where('idUsuario', $id)->firstOrFail();
+        return response()->json($usuario, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -89,5 +86,37 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function existeUsuario($usuario)
+    {
+        $existe = false;
+        //Checkeamos un valor cualquiera por comprobar si existe
+        if(Usuario::where('correo', $usuario)->value('rol'))
+        {
+            $existe = true;
+        }
+        return $existe;
+    }
+
+    public function checkPassword($usuario, $password)
+    {
+        $correcto = false;
+        if($password === Usuario::where('correo', $usuario)->value('contrasena'))
+        {
+            $correcto = true;
+        }
+        
+        return $correcto;
+    }
+
+    public function isAdmin($usuario)
+    {
+        $isAdmin = false;
+        if(Usuario::where('correo', $usuario)->value('rol') == 1)
+        {
+            $isAdmin = true;
+        }
+        return $isAdmin;
     }
 }
