@@ -16,7 +16,7 @@ class MunicipiosController extends Controller
      */
     public function index()
     {
-        $municipios = Municipio::all();
+        $municipios = Municipio::orderBy('MUNICIPIO', 'asc')->get();
         return response()->json($municipios, JsonResponse::HTTP_OK);
     }
 
