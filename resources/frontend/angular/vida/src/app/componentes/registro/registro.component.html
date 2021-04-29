@@ -8,7 +8,7 @@
         <!-- Google Fonts -->
 
         <!-- Estilos -->
-        
+        <link href="//cdn.syncfusion.com/ej2/material.css" rel="stylesheet" />
         <title>Registro de Usuarios</title>
     </head>
 
@@ -20,7 +20,7 @@
                 <!-- Iniciar Sesion -->
                 <div id="iniciar-sesion">
                     <h1>CREAR CUENTA</h1>
-                    <form (submit) = "registrarUsuario($event, email.value, pwd.value, nombre.value, apellidos.value, cb_municipio.value)">
+                    <form (submit) = "registrarUsuario($event, email.value, pwd.value, nombre.value, apellidos.value, municipio.value)">
                         <div class="contenedor-input">
                             <input #nombre type="text" placeholder="Nombre" id="usuarioTxt">
                         </div>
@@ -36,10 +36,8 @@
                         <div class="contenedor-input">
                             <input #pwd type="password" placeholder="Contraseña" id="passwordTxt">
                         </div>
-                        <div class="contenedor-input">
-                            <select #cb_municipio name="cb_municipios" > <!-- *ngFor="let heroe of heroes; let i = index (para introducir todos los municipios en el combobox)-->
-                                <option value= {{municipio.getCod_mun}} *ngFor="let municipio of municipios"> {{municipio.getNombre_mun}} </option>
-                            </select>
+                        <div class="contenedor-input" style='width: 250px'>
+                            <ejs-combobox #municipio id='municipios' [dataSource]='municipios' [autofill]='true' [fields]='localFields' [placeholder]='localWaterMark' [popupHeight]='height'></ejs-combobox>
                         </div>
                         <button type="submit">
                             REGISTRARSE

@@ -16,7 +16,7 @@ class MunicipiosController extends Controller
      */
     public function index()
     {
-        $municipios = Municipio::all();
+        $municipios = Municipio::orderBy('MUNICIPIO', 'desc')->get();
         return response()->json($municipios, JsonResponse::HTTP_OK);
     }
 
@@ -49,7 +49,7 @@ class MunicipiosController extends Controller
      */
     public function show($id)
     {
-        $municipio = Municipio::where('CODMUN', $id)->firstOrFail();;
+        $municipio = Municipio::where('CODMUN', $id)->firstOrFail();
         return response()->json($municipio, JsonResponse::HTTP_OK);
     }
 
