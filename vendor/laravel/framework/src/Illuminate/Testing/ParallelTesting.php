@@ -43,13 +43,6 @@ class ParallelTesting
     protected $setUpTestCaseCallbacks = [];
 
     /**
-     * All of the registered "setUp" test database callbacks.
-     *
-     * @var array
-     */
-    protected $setUpTestDatabaseCallbacks = [];
-
-    /**
      * All of the registered "tearDown" process callbacks.
      *
      * @var array
@@ -119,17 +112,6 @@ class ParallelTesting
     }
 
     /**
-     * Register a "setUp" test database callback.
-     *
-     * @param  callable  $callback
-     * @return void
-     */
-    public function setUpTestDatabase($callback)
-    {
-        $this->setUpTestDatabaseCallbacks[] = $callback;
-    }
-
-    /**
      * Register a "tearDown" process callback.
      *
      * @param  callable  $callback
@@ -186,24 +168,6 @@ class ParallelTesting
     }
 
     /**
-     * Call all of the "setUp" test database callbacks.
-     *
-     * @param  string  $database
-     * @return void
-     */
-    public function callSetUpTestDatabaseCallbacks($database)
-    {
-        $this->whenRunningInParallel(function () use ($database) {
-            foreach ($this->setUpTestDatabaseCallbacks as $callback) {
-                $this->container->call($callback, [
-                    'database' => $database,
-                    'token' => $this->token(),
-                ]);
-            }
-        });
-    }
-
-    /**
      * Call all of the "tearDown" process callbacks.
      *
      * @return void
@@ -238,7 +202,7 @@ class ParallelTesting
     }
 
     /**
-     * Get a parallel testing option.
+     * Get an parallel testing option.
      *
      * @param  string  $option
      * @return mixed
@@ -269,7 +233,7 @@ class ParallelTesting
     /**
      * Apply the callback if tests are running in parallel.
      *
-     * @param  callable  $callback
+     * @param  callable $callback
      * @return void
      */
     protected function whenRunningInParallel($callback)

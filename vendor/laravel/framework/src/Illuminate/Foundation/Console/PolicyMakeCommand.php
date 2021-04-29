@@ -131,13 +131,8 @@ class PolicyMakeCommand extends GeneratorCommand
             array_keys($replace), array_values($replace), $stub
         );
 
-        return preg_replace(
-            vsprintf('/use %s;[\r\n]+use %s;/', [
-                preg_quote($namespacedModel, '/'),
-                preg_quote($namespacedModel, '/'),
-            ]),
-            "use {$namespacedModel};",
-            $stub
+        return str_replace(
+            "use {$namespacedModel};\nuse {$namespacedModel};", "use {$namespacedModel};", $stub
         );
     }
 

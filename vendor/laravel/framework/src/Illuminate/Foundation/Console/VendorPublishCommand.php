@@ -4,7 +4,6 @@ namespace Illuminate\Foundation\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\Events\VendorTagPublished;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Adapter\Local as LocalAdapter;
@@ -160,9 +159,7 @@ class VendorPublishCommand extends Command
     {
         $published = false;
 
-        $pathsToPublish = $this->pathsToPublish($tag);
-
-        foreach ($pathsToPublish as $from => $to) {
+        foreach ($this->pathsToPublish($tag) as $from => $to) {
             $this->publishItem($from, $to);
 
             $published = true;
@@ -170,8 +167,6 @@ class VendorPublishCommand extends Command
 
         if ($published === false) {
             $this->error('Unable to locate publishable resources.');
-        } else {
-            $this->laravel['events']->dispatch(new VendorTagPublished($tag, $pathsToPublish));
         }
     }
 

@@ -13,7 +13,6 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use ReflectionClass;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Migrator
@@ -186,9 +185,9 @@ class Migrator
         // First we will resolve a "real" instance of the migration class from this
         // migration file name. Once we have the instances we can run the actual
         // command such as "up" or "down", or we can just simulate the action.
-        $migration = $this->resolvePath($file);
-
-        $name = $this->getMigrationName($file);
+        $migration = $this->resolve(
+            $name = $this->getMigrationName($file)
+        );
 
         if ($pretend) {
             return $this->pretendToRun($migration, 'up');
@@ -349,9 +348,9 @@ class Migrator
         // First we will get the file name of the migration so we can resolve out an
         // instance of the migration. Once we get an instance we can either run a
         // pretend execution of the migration or we can run the real migration.
-        $instance = $this->resolvePath($file);
-
-        $name = $this->getMigrationName($file);
+        $instance = $this->resolve(
+            $name = $this->getMigrationName($file)
+        );
 
         $this->note("<comment>Rolling back:</comment> {$name}");
 
@@ -414,12 +413,6 @@ class Migrator
         foreach ($this->getQueries($migration, $method) as $query) {
             $name = get_class($migration);
 
-            $reflectionClass = new ReflectionClass($migration);
-
-            if ($reflectionClass->isAnonymous()) {
-                $name = $this->getMigrationName($reflectionClass->getFileName());
-            }
-
             $this->note("<info>{$name}:</info> {$query['query']}");
         }
     }
@@ -455,37 +448,9 @@ class Migrator
      */
     public function resolve($file)
     {
-        $class = $this->getMigrationClass($file);
+        $class = Str::studly(implode('_', array_slice(explode('_', $file), 4)));
 
         return new $class;
-    }
-
-    /**
-     * Resolve a migration instance from a migration path.
-     *
-     * @param  string  $path
-     * @return object
-     */
-    protected function resolvePath(string $path)
-    {
-        $class = $this->getMigrationClass($this->getMigrationName($path));
-
-        if (class_exists($class) && realpath($path) == (new ReflectionClass($class))->getFileName()) {
-            return new $class;
-        }
-
-        return $this->files->getRequire($path);
-    }
-
-    /**
-     * Generate a migration class name based on the migration file name.
-     *
-     * @param  string  $migrationName
-     * @return string
-     */
-    protected function getMigrationClass(string $migrationName): string
-    {
-        return Str::studly(implode('_', array_slice(explode('_', $migrationName), 4)));
     }
 
     /**

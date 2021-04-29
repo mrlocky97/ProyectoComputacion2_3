@@ -103,7 +103,7 @@ class DumpRecorder
             return new CliDumper();
         }
 
-        if (in_array(PHP_SAPI, ['cli', 'phpdbg']) && ! isset($_SERVER['LARAVEL_OCTANE'])) {
+        if (in_array(PHP_SAPI, ['cli', 'phpdbg'])) {
             return new CliDumper() ;
         }
 

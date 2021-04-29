@@ -4,7 +4,6 @@ namespace Illuminate\Queue\Console;
 
 use Carbon\Carbon;
 use Illuminate\Bus\BatchRepository;
-use Illuminate\Bus\DatabaseBatchRepository;
 use Illuminate\Bus\PrunableBatchRepository;
 use Illuminate\Console\Command;
 
@@ -15,9 +14,7 @@ class PruneBatchesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'queue:prune-batches
-                {--hours=24 : The number of hours to retain batch data}
-                {--unfinished= : The number of hours to retain unfinished batch data }';
+    protected $signature = 'queue:prune-batches {--hours=24 : The number of hours to retain batch data}';
 
     /**
      * The console command description.
@@ -33,24 +30,14 @@ class PruneBatchesCommand extends Command
      */
     public function handle()
     {
-        $repository = $this->laravel[BatchRepository::class];
-
         $count = 0;
+
+        $repository = $this->laravel[BatchRepository::class];
 
         if ($repository instanceof PrunableBatchRepository) {
             $count = $repository->prune(Carbon::now()->subHours($this->option('hours')));
         }
 
         $this->info("{$count} entries deleted!");
-
-        if ($unfinished = $this->option('unfinished')) {
-            $count = 0;
-
-            if ($repository instanceof DatabaseBatchRepository) {
-                $count = $repository->pruneUnfinished(Carbon::now()->subHours($this->option('unfinished')));
-            }
-
-            $this->info("{$count} unfinished entries deleted!");
-        }
     }
 }

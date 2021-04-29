@@ -48,7 +48,7 @@ trait Dispatchable
     /**
      * Dispatch a command to its appropriate handler in the current process.
      *
-     * Queueable jobs will be dispatched to the "sync" queue.
+     * Queuable jobs will be dispatched to the "sync" queue.
      *
      * @return mixed
      */
@@ -61,8 +61,6 @@ trait Dispatchable
      * Dispatch a command to its appropriate handler in the current process.
      *
      * @return mixed
-     *
-     * @deprecated Will be removed in a future Laravel version.
      */
     public static function dispatchNow()
     {

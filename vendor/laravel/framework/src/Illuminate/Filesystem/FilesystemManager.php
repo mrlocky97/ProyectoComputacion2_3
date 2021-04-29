@@ -125,11 +125,11 @@ class FilesystemManager implements FactoryContract
 
         $driverMethod = 'create'.ucfirst($name).'Driver';
 
-        if (! method_exists($this, $driverMethod)) {
+        if (method_exists($this, $driverMethod)) {
+            return $this->{$driverMethod}($config);
+        } else {
             throw new InvalidArgumentException("Driver [{$name}] is not supported.");
         }
-
-        return $this->{$driverMethod}($config);
     }
 
     /**
@@ -243,7 +243,7 @@ class FilesystemManager implements FactoryContract
     {
         $cache = Arr::pull($config, 'cache');
 
-        $config = Arr::only($config, ['visibility', 'disable_asserts', 'url', 'temporary_url']);
+        $config = Arr::only($config, ['visibility', 'disable_asserts', 'url']);
 
         if ($cache) {
             $adapter = new CachedAdapter($adapter, $this->createCacheStore($cache));

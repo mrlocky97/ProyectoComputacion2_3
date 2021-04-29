@@ -38,9 +38,7 @@ class ControllerMakeCommand extends GeneratorCommand
     {
         $stub = null;
 
-        if ($type = $this->option('type')) {
-            $stub = "/stubs/controller.{$type}.stub";
-        } elseif ($this->option('parent')) {
+        if ($this->option('parent')) {
             $stub = '/stubs/controller.nested.stub';
         } elseif ($this->option('model')) {
             $stub = '/stubs/controller.model.stub';
@@ -197,7 +195,6 @@ class ControllerMakeCommand extends GeneratorCommand
     {
         return [
             ['api', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods from the controller.'],
-            ['type', null, InputOption::VALUE_REQUIRED, 'Manually specify the controller stub file to use.'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the controller already exists'],
             ['invokable', 'i', InputOption::VALUE_NONE, 'Generate a single method, invokable controller class.'],
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],

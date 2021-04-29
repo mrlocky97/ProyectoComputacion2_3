@@ -18,7 +18,6 @@ namespace Illuminate\Support\Facades;
  * @method static bool hasTable(string $table)
  * @method static void defaultStringLength(int $length)
  * @method static void registerCustomDoctrineType(string $class, string $name, string $type)
- * @method static array getColumnListing(string $table)
  *
  * @see \Illuminate\Database\Schema\Builder
  */
