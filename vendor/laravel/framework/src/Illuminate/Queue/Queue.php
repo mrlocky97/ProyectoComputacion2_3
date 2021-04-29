@@ -157,10 +157,10 @@ abstract class Queue
                     : serialize(clone $job);
 
         return array_merge($payload, [
-            'data' => [
+            'data' => array_merge($payload['data'], [
                 'commandName' => get_class($job),
                 'command' => $command,
-            ],
+            ]),
         ]);
     }
 
@@ -253,7 +253,7 @@ abstract class Queue
     /**
      * Register a callback to be executed when creating job payloads.
      *
-     * @param  callable  $callback
+     * @param  callable|null  $callback
      * @return void
      */
     public static function createPayloadUsing($callback)
@@ -367,6 +367,16 @@ abstract class Queue
         $this->connectionName = $name;
 
         return $this;
+    }
+
+    /**
+     * Get the container instance being used by the connection.
+     *
+     * @return \Illuminate\Container\Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     /**
