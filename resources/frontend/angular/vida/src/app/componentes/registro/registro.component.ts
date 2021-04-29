@@ -1,13 +1,12 @@
 import { Component, OnInit} from '@angular/core';
 import { Municipio } from './modelo/municipio';
-import { DataService } from '../../data.service';
-
 @Component({
     selector:'app-registro',
     templateUrl:'./registro.component.html',
     styleUrls:['./registro.component.css'],
 })
-export class RegistroComponent implements OnInit{
+export class RegistroComponent{
+
 
     //LLAMAR A LA API, PARA QUE EXTRAIGO LOS OBJETOS DE LOS MUNICIPIS (METODO INDEX -> MunicipiosController).
     //municipios: string[] = ['Getafe', 'Madrid', 'Villaciciosa de Odon', 'Mostoles', 'Alcorcon'];
@@ -20,21 +19,7 @@ export class RegistroComponent implements OnInit{
     */
     municipios: Municipio[] =[];
 
-    constructor(private dataService: DataService) { }
-
-    ngOnInit(): void {
-        this.dataService.sendGetRequest('Municipios').subscribe((data: any)=>{
-            this.municipios = data;
-        });
-    }
-
-    public localFields: Object = { text: 'MUNICIPIO', value: 'CODMU' };
-    public localWaterMark: string = 'Selecciona un municipio';
-
-    // set the height of the popup element.
-    public height: string = '250px';
-
-    registrarUsuario(event:any, nombre:string,apellidos:string,email:string, password:string, cb_municipio:any):void {
+    registrarUsuario(event:any, nombre:string,apellidos:string,email:string, password:string, cb_municipio:string):void {
         event.preventDefault();
         console.log("REGISTRANDO USUARIO ...");
         console.log(nombre);
