@@ -29,7 +29,6 @@ use Facade\Ignition\Middleware\AddGitInformation;
 use Facade\Ignition\Middleware\AddLogs;
 use Facade\Ignition\Middleware\AddQueries;
 use Facade\Ignition\Middleware\AddSolutions;
-use Facade\Ignition\Middleware\CustomizeGrouping;
 use Facade\Ignition\Middleware\SetNotifierName;
 use Facade\Ignition\QueryRecorder\QueryRecorder;
 use Facade\Ignition\SolutionProviders\BadMethodCallSolutionProvider;
@@ -63,6 +62,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Engines\CompilerEngine as LaravelCompilerEngine;
 use Illuminate\View\Engines\PhpEngine as LaravelPhpEngine;
+use Livewire\CompilerEngineForIgnition;
 use Monolog\Logger;
 use Throwable;
 use Whoops\Handler\HandlerInterface;
@@ -80,7 +80,7 @@ class IgnitionServiceProvider extends ServiceProvider
                 __DIR__.'/../config/ignition.php' => config_path('ignition.php'),
             ], 'ignition-config');
 
-            if (['artisan', 'tinker'] === $_SERVER['argv']) {
+            if (isset($_SERVER['argv']) && ['artisan', 'tinker'] === $_SERVER['argv']) {
                 Api::sendReportsInBatches(false);
             }
         }
@@ -131,6 +131,8 @@ class IgnitionServiceProvider extends ServiceProvider
             $this->app->get(Flare::class)->anonymizeIp();
         }
 
+        $this->app->get(Flare::class)->censorRequestBodyFields(config('flare.reporting.censor_request_body_fields', ['password']));
+
         $this->registerBuiltInMiddleware();
     }
 
@@ -145,8 +147,8 @@ class IgnitionServiceProvider extends ServiceProvider
         });
 
         $this->app->make('view.engine.resolver')->register('blade', function () {
-            if (class_exists(\Livewire\CompilerEngineForIgnition::class)) {
-                return new \Livewire\CompilerEngineForIgnition($this->app['blade.compiler']);
+            if (class_exists(CompilerEngineForIgnition::class)) {
+                return new CompilerEngineForIgnition($this->app['blade.compiler']);
             }
 
             return new CompilerEngine($this->app['blade.compiler']);
@@ -373,10 +375,6 @@ class IgnitionServiceProvider extends ServiceProvider
 
         if (config('flare.reporting.collect_git_information')) {
             $middleware[] = (new AddGitInformation());
-        }
-
-        if (! is_null(config('flare.reporting.grouping_type'))) {
-            $middleware[] = new CustomizeGrouping(config('flare.reporting.grouping_type'));
         }
 
         foreach ($middleware as $singleMiddleware) {
