@@ -2,7 +2,6 @@
 
 namespace Facade\FlareClient;
 
-use ErrorException;
 use Exception;
 use Facade\FlareClient\Concerns\HasContext;
 use Facade\FlareClient\Context\ContextContextDetector;
@@ -13,7 +12,6 @@ use Facade\FlareClient\Glows\Recorder;
 use Facade\FlareClient\Http\Client;
 use Facade\FlareClient\Middleware\AddGlows;
 use Facade\FlareClient\Middleware\AnonymizeIp;
-use Facade\FlareClient\Middleware\CensorRequestBodyFields;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
 use Throwable;
@@ -23,57 +21,37 @@ class Flare
     use HasContext;
 
     /** @var \Facade\FlareClient\Http\Client */
-    protected $client;
+    private $client;
 
     /** @var \Facade\FlareClient\Api */
-    protected $api;
+    private $api;
 
     /** @var array */
-    protected $middleware = [];
+    private $middleware = [];
 
     /** @var \Facade\FlareClient\Glows\Recorder */
-    protected $recorder;
+    private $recorder;
 
     /** @var string */
-    protected $applicationPath;
+    private $applicationPath;
 
     /** @var \Illuminate\Contracts\Container\Container|null */
-    protected $container;
+    private $container;
 
     /** @var ContextDetectorInterface */
-    protected $contextDetector;
+    private $contextDetector;
 
     /** @var callable|null */
-    protected $previousExceptionHandler;
+    private $previousExceptionHandler;
 
     /** @var callable|null */
-    protected $previousErrorHandler;
-
-    /** @var callable|null */
-    protected $determineVersionCallable;
+    private $previousErrorHandler;
 
     public static function register(string $apiKey, string $apiSecret = null, ContextDetectorInterface $contextDetector = null, Container $container = null)
     {
         $client = new Client($apiKey, $apiSecret);
 
         return new static($client, $contextDetector, $container);
-    }
-
-    public function determineVersionUsing($determineVersionCallable)
-    {
-        $this->determineVersionCallable = $determineVersionCallable;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function version()
-    {
-        if (! $this->determineVersionCallable) {
-            return null;
-        }
-
-        return ($this->determineVersionCallable)();
     }
 
     public function __construct(Client $client, ContextDetectorInterface $contextDetector = null, Container $container = null, array $middleware = [])
@@ -151,7 +129,7 @@ class Flare
 
     public function handleError($code, $message, $file = '', $line = 0)
     {
-        $exception = new ErrorException($message, 0, $code, $file, $line);
+        $exception = new \ErrorException($message, 0, $code, $file, $line);
 
         $this->report($exception);
 
@@ -227,14 +205,7 @@ class Flare
 
     public function anonymizeIp()
     {
-        $this->registerMiddleware(new AnonymizeIp());
-
-        return $this;
-    }
-
-    public function censorRequestBodyFields(array $fieldNames)
-    {
-        $this->registerMiddleware(new CensorRequestBodyFields($fieldNames));
+        $this->registerMiddleware(new AnonymizeIp);
 
         return $this;
     }
@@ -244,8 +215,7 @@ class Flare
         $report = Report::createForThrowable(
             $throwable,
             $this->contextDetector->detectCurrentContext(),
-            $this->applicationPath,
-            $this->version()
+            $this->applicationPath
         );
 
         return $this->applyMiddlewareToReport($report);
@@ -259,6 +229,8 @@ class Flare
             $this->contextDetector->detectCurrentContext(),
             $this->applicationPath
         );
+
+        $report->groupByException();
 
         return $this->applyMiddlewareToReport($report);
     }

@@ -67,8 +67,6 @@ class RouteListCommand extends Command
      */
     public function handle()
     {
-        $this->router->flushMiddlewareGroups();
-
         if (empty($this->router->getRoutes())) {
             return $this->error("Your application doesn't have any routes.");
         }
@@ -165,7 +163,7 @@ class RouteListCommand extends Command
     }
 
     /**
-     * Get the middleware for the route.
+     * Get before filters.
      *
      * @param  \Illuminate\Routing\Route  $route
      * @return string
@@ -189,14 +187,6 @@ class RouteListCommand extends Command
              $this->option('path') && ! Str::contains($route['uri'], $this->option('path')) ||
              $this->option('method') && ! Str::contains($route['method'], strtoupper($this->option('method')))) {
             return;
-        }
-
-        if ($this->option('except-path')) {
-            foreach (explode(',', $this->option('except-path')) as $path) {
-                if (Str::contains($route['uri'], $path)) {
-                    return;
-                }
-            }
         }
 
         return $route;
@@ -266,8 +256,7 @@ class RouteListCommand extends Command
             ['json', null, InputOption::VALUE_NONE, 'Output the route list as JSON'],
             ['method', null, InputOption::VALUE_OPTIONAL, 'Filter the routes by method'],
             ['name', null, InputOption::VALUE_OPTIONAL, 'Filter the routes by name'],
-            ['path', null, InputOption::VALUE_OPTIONAL, 'Only show routes matching the given path pattern'],
-            ['except-path', null, InputOption::VALUE_OPTIONAL, 'Do not display the routes matching the given path pattern'],
+            ['path', null, InputOption::VALUE_OPTIONAL, 'Filter the routes by path'],
             ['reverse', 'r', InputOption::VALUE_NONE, 'Reverse the ordering of the routes'],
             ['sort', null, InputOption::VALUE_OPTIONAL, 'The column (domain, method, uri, name, action, middleware) to sort by', 'uri'],
         ];

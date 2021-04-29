@@ -5,10 +5,9 @@ namespace Illuminate\Encryption;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
 use Illuminate\Contracts\Encryption\EncryptException;
-use Illuminate\Contracts\Encryption\StringEncrypter;
 use RuntimeException;
 
-class Encrypter implements EncrypterContract, StringEncrypter
+class Encrypter implements EncrypterContract
 {
     /**
      * The encryption key.

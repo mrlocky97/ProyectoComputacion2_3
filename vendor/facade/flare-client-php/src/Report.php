@@ -38,9 +38,6 @@ class Report
     /** @var string */
     private $applicationPath;
 
-    /** @var ?string */
-    private $applicationVersion;
-
     /** @var array */
     private $userProvidedContext = [];
 
@@ -63,14 +60,10 @@ class Report
     private $openFrameIndex;
 
     /** @var string */
-    private $groupBy ;
+    private $groupBy;
 
-    public static function createForThrowable(
-        Throwable $throwable,
-        ContextInterface $context,
-        ?string $applicationPath = null,
-        ?string $version = null
-    ): self {
+    public static function createForThrowable(Throwable $throwable, ContextInterface $context, ?string $applicationPath = null): self
+    {
         return (new static())
             ->setApplicationPath($applicationPath)
             ->throwable($throwable)
@@ -78,8 +71,7 @@ class Report
             ->exceptionClass(self::getClassForThrowable($throwable))
             ->message($throwable->getMessage())
             ->stackTrace(Stacktrace::createForThrowable($throwable, $applicationPath))
-            ->exceptionContext($throwable)
-            ->setApplicationVersion($version);
+            ->exceptionContext($throwable);
     }
 
     protected static function getClassForThrowable(Throwable $throwable): string
@@ -201,18 +193,6 @@ class Report
         return $this->applicationPath;
     }
 
-    public function setApplicationVersion(?string $applicationVersion)
-    {
-        $this->applicationVersion = $applicationVersion;
-
-        return $this;
-    }
-
-    public function getApplicationVersion(): ?string
-    {
-        return $this->applicationVersion;
-    }
-
     public function view(?View $view)
     {
         $this->view = $view;
@@ -241,7 +221,6 @@ class Report
         return $this;
     }
 
-    /** @deprecated  */
     public function groupByTopFrame()
     {
         $this->groupBy = GroupingTypes::TOP_FRAME;
@@ -249,7 +228,6 @@ class Report
         return $this;
     }
 
-    /** @deprecated  */
     public function groupByException()
     {
         $this->groupBy = GroupingTypes::EXCEPTION;
@@ -292,8 +270,8 @@ class Report
             'stage' => $this->stage,
             'message_level' => $this->messageLevel,
             'open_frame_index' => $this->openFrameIndex,
+            'group_by' => $this->groupBy ?? GroupingTypes::TOP_FRAME,
             'application_path' => $this->applicationPath,
-            'application_version' => $this->applicationVersion,
         ];
     }
 }

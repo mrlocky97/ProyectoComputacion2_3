@@ -646,8 +646,6 @@ class Router implements BindingRegistrar, RegistrarContract
     {
         $this->current = $route = $this->routes->match($request);
 
-        $route->setContainer($this->container);
-
         $this->container->instance(Route::class, $route);
 
         return $route;
@@ -714,13 +712,7 @@ class Router implements BindingRegistrar, RegistrarContract
         })->flatten()->reject(function ($name) use ($excluded) {
             if (empty($excluded)) {
                 return false;
-            }
-
-            if ($name instanceof Closure) {
-                return false;
-            }
-
-            if (in_array($name, $excluded, true)) {
+            } elseif (in_array($name, $excluded, true)) {
                 return true;
             }
 
@@ -951,18 +943,6 @@ class Router implements BindingRegistrar, RegistrarContract
         if (! in_array($middleware, $this->middlewareGroups[$group])) {
             $this->middlewareGroups[$group][] = $middleware;
         }
-
-        return $this;
-    }
-
-    /**
-     * Flush the router's middleware groups.
-     *
-     * @return $this
-     */
-    public function flushMiddlewareGroups()
-    {
-        $this->middlewareGroups = [];
 
         return $this;
     }
@@ -1291,19 +1271,6 @@ class Router implements BindingRegistrar, RegistrarContract
         }
 
         return $result;
-    }
-
-    /**
-     * Set the container instance used by the router.
-     *
-     * @param  \Illuminate\Container\Container  $container
-     * @return $this
-     */
-    public function setContainer(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
     }
 
     /**

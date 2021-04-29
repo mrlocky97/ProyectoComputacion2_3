@@ -79,25 +79,8 @@ class Builder
      * @var string[]
      */
     protected $passthru = [
-        'average',
-        'avg',
-        'count',
-        'dd',
-        'doesntExist',
-        'dump',
-        'exists',
-        'getBindings',
-        'getConnection',
-        'getGrammar',
-        'insert',
-        'insertGetId',
-        'insertOrIgnore',
-        'insertUsing',
-        'max',
-        'min',
-        'raw',
-        'sum',
-        'toSql',
+        'insert', 'insertOrIgnore', 'insertGetId', 'insertUsing', 'getBindings', 'toSql', 'dump', 'dd',
+        'exists', 'doesntExist', 'count', 'min', 'max', 'avg', 'average', 'sum', 'getConnection', 'raw', 'getGrammar',
     ];
 
     /**
@@ -1237,19 +1220,6 @@ class Builder
     }
 
     /**
-     * Set the relationships that should be eager loaded while removing any previously added eager loading specifications.
-     *
-     * @param  mixed  $relations
-     * @return $this
-     */
-    public function withOnly($relations)
-    {
-        $this->eagerLoad = [];
-
-        return $this->with($relations);
-    }
-
-    /**
      * Create a new instance of the model being queried.
      *
      * @param  array  $attributes
@@ -1619,16 +1589,6 @@ class Builder
                 static::macro($method->name, $method->invoke($mixin));
             }
         }
-    }
-
-    /**
-     * Clone the Eloquent query builder.
-     *
-     * @return static
-     */
-    public function clone()
-    {
-        return clone $this;
     }
 
     /**

@@ -64,7 +64,7 @@ class CorsService
 
     public function isCorsRequest(Request $request): bool
     {
-        return $request->headers->has('Origin');
+        return $request->headers->has('Origin') && !$this->isSameHost($request);
     }
 
     public function isPreflightRequest(Request $request): bool
@@ -146,7 +146,7 @@ class CorsService
             $response->headers->set('Access-Control-Allow-Origin', array_values($this->options['allowedOrigins'])[0]);
         } else {
             // For dynamic headers, check the origin first
-            if ($request->headers->has('Origin') && $this->isOriginAllowed($request)) {
+            if ($this->isOriginAllowed($request)) {
                 $response->headers->set('Access-Control-Allow-Origin', $request->headers->get('Origin'));
             }
 

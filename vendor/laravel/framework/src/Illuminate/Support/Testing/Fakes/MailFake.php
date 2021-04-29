@@ -276,7 +276,7 @@ class MailFake implements Factory, Mailer, MailQueue
      * Get a mailer instance by name.
      *
      * @param  string|null  $name
-     * @return \Illuminate\Contracts\Mail\Mailer
+     * @return \Illuminate\Mail\Mailer
      */
     public function mailer($name = null)
     {

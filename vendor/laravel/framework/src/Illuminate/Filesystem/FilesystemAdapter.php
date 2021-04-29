@@ -23,7 +23,6 @@ use League\Flysystem\FilesystemInterface;
 use League\Flysystem\Sftp\SftpAdapter as Sftp;
 use PHPUnit\Framework\Assert as PHPUnit;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -594,18 +593,9 @@ class FilesystemAdapter implements CloudFilesystemContract
             'Key' => $adapter->getPathPrefix().$path,
         ], $options));
 
-        $uri = $client->createPresignedRequest(
+        return (string) $client->createPresignedRequest(
             $command, $expiration
         )->getUri();
-
-        // If an explicit base URL has been set on the disk configuration then we will use
-        // it as the base URL instead of the default path. This allows the developer to
-        // have full control over the base path for this filesystem's generated URLs.
-        if (! is_null($url = $this->driver->getConfig()->get('temporary_url'))) {
-            $uri = $this->replaceBaseUrl($uri, $url);
-        }
-
-        return (string) $uri;
     }
 
     /**
@@ -618,23 +608,6 @@ class FilesystemAdapter implements CloudFilesystemContract
     protected function concatPathToUrl($url, $path)
     {
         return rtrim($url, '/').'/'.ltrim($path, '/');
-    }
-
-    /**
-     * Replace the scheme, host and port of the given UriInterface with values from the given URL.
-     *
-     * @param  \Psr\Http\Message\UriInterface  $uri
-     * @param  string  $url
-     * @return \Psr\Http\Message\UriInterface
-     */
-    protected function replaceBaseUrl($uri, $url)
-    {
-        $parsed = parse_url($url);
-
-        return $uri
-            ->withScheme($parsed['scheme'])
-            ->withHost($parsed['host'])
-            ->withPort($parsed['port'] ?? null);
     }
 
     /**
