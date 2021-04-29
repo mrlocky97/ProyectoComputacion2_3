@@ -9,32 +9,24 @@
 
         <!-- Estilos -->
         
-        <title>Formulario Login y Registro de Usuarios</title>
+        <title>Formulario Login</title>
     </head>
 
     <body>
-        <!-- Formularios -->
-        <div class="contenedor-formularios">
-            <!-- Contenido de los Formularios -->
-            <div class="contenido-tab">
-                <!-- Iniciar Sesion -->
-                <div id="iniciar-sesion">
-                    <h1>Iniciar Sesión</h1>
-                    <form method="post" >
-                        <div class="contenedor-input">
-                            <input type="email" required placeholder="Correo electronico" id="usuarioTxt">
-                        </div>
-
-                        <div class="contenedor-input">
-                            <input type="password" required placeholder="Contraseña" id="passwordTxt">
-                        </div>
-                        <p class="forgot"><a href="#">Se te olvidó la contraseña?</a></p>
-                        <button type="submit">
-                            Iniciar sesion
-                        </button>
-                    </form>
-                </div>
-            </div>
+        <div>
+            <h1>Login</h1>
+        </div>
+        <div>
+            <form (submit)="iniciarSesion( $event, email.value, password.value)">     
+                <br>
+                <input #email type="email" placeholder="Correo electronico">
+                <br>
+                <input #password type="password" placeholder="Contraseña">
+                <br>
+                <button type="submit">
+                    Iniciar sesion
+                </button> 
+            </form>
         </div>
     </body>
 </html>
