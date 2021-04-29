@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ComboBoxModule } from '@syncfusion/ej2-angular-dropdowns';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +17,8 @@ import { RegistroComponent } from './componentes/registro/registro.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ComboBoxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
